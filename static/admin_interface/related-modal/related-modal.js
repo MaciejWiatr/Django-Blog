@@ -1,18 +1,22 @@
-if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
-    (function ($) {
+if (typeof(django) !== 'undefined' && typeof(django.jQuery) !== 'undefined')
+{
+    (function($) {
 
-        $(document).ready(function () {
+        $(document).ready(function(){
 
-            function dismissModal() {
+            function dismissModal()
+            {
                 $.magnificPopup.close();
             }
 
             // create the function that will close the modal
-            function dismissRelatedObjectModal() {
+            function dismissRelatedObjectModal()
+            {
                 dismissModal();
             }
 
-            function dismissRelatedLookupModal(win, chosenId) {
+            function dismissRelatedLookupModal(win, chosenId)
+            {
                 var windowRef = win;
                 var windowName = windowRef.name;
                 var widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
@@ -30,7 +34,8 @@ if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
             window.dismissRelatedObjectModal = dismissRelatedObjectModal;
             window.dismissRelatedLookupPopup = dismissRelatedLookupModal;
 
-            function presentRelatedObjectModal(e) {
+            function presentRelatedObjectModal(e)
+            {
                 var linkEl = $(this);
 
                 var href = (linkEl.attr('href') || '');
@@ -50,7 +55,8 @@ if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
                 var iframeName = linkEl.attr('id');
                 var iframeSrc = href;
 
-                if (e.data.lookup !== true) {
+                if (e.data.lookup !== true)
+                {
                     // browsers stop loading nested iframes having the same src url
                     // create a random parameter and append it to the src url to prevent it
                     // this workaround doesn't work with related lookup url
@@ -77,10 +83,11 @@ if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
                 var modalEl = $(modalHTML);
                 var iframeEl = modalEl.find('#related-modal-iframe');
 
-                if (e.data.lookup === true) {
+                if (e.data.lookup === true)
+                {
                     // set current window as iframe opener because
                     // the callback is called on the opener window
-                    iframeEl.on('load', function () {
+                    iframeEl.on('load', function() {
                         var iframeObj = $(this).get(0);
                         var iframeWindow = iframeObj.contentWindow;
                         iframeWindow.opener = window;
@@ -113,7 +120,7 @@ if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
             // listen click events on related links
             function presentRelatedObjectModalOnClickOn(selector, lookup) {
                 var data = {
-                    lookup: (lookup === true ? true : false)
+                    lookup:(lookup === true ? true : false)
                 };
                 var el = $(selector);
                 el.removeAttr('onclick');

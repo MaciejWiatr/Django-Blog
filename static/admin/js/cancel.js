@@ -1,11 +1,11 @@
-if (typeof (django) !== 'undefined' && typeof (django.jQuery) !== 'undefined') {
-    (function ($) {
+if (typeof(django) !== 'undefined' && typeof(django.jQuery) !== 'undefined') {
+    (function($) {
         'use strict';
-        $(document).ready(function () {
-            $('.cancel-link').click(function (e) {
+        $(document).ready(function() {
+            $('.cancel-link').click(function(e) {
                 e.preventDefault();
                 var parentWindow = window.parent;
-                if (parentWindow && typeof (parentWindow.dismissRelatedObjectModal) === 'function' && parentWindow !== window) {
+                if (parentWindow && typeof(parentWindow.dismissRelatedObjectModal) === 'function' && parentWindow !== window) {
                     parentWindow.dismissRelatedObjectModal();
                 } else {
                     // fallback to default behavior

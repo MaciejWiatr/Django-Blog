@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+<a href="{% url "blog:index" %}">Wróć na główną</a>
+<h2>Post detail:</h2>
+{{ post.title }}
+{{ post.text }}
+
+<h2>Comments:</h2>
+{% for comment in comments %}
+    <p>{{ comment.text }}</p>
+    <p>opublikowano {{ comment.created_on.date }}</p>
+{% endfor %}
+</body>
+</html>

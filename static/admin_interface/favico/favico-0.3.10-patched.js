@@ -43,8 +43,7 @@
             dataUrl: false,
             win: window
         };
-        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser,
-            _animTimeout, _drawTimeout, _doc;
+        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
 
         _browser = {};
         _browser.ff = typeof InstallTrigger != 'undefined';
@@ -102,7 +101,7 @@
             }
             _opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
 
-            _orig = link.getIcons();
+            _orig = link. getIcons();
             //create temp canvas
             _canvas = document.createElement('canvas');
             //create temp image
@@ -368,7 +367,7 @@
                     var newImg = document.createElement('img');
                     var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
                     newImg.setAttribute('crossOrigin', 'anonymous');
-                    newImg.onload = function () {
+                    newImg.onload=function(){
                         _context.clearRect(0, 0, _w, _h);
                         _context.drawImage(newImg, 0, 0, _w, _h);
                         link.setIcon(_canvas);
@@ -388,7 +387,7 @@
          * Set the icon from a source url. Won't work with badges.
          */
         var rawImageSrc = function (url) {
-            _readyCb = function () {
+            _readyCb = function() {
                 link.setIconSrc(url);
             };
             if (_ready) {
@@ -539,7 +538,7 @@
                     _doc.getElementsByTagName('head')[0].appendChild(elms[0]);
                 }
             }
-            elms.forEach(function (item) {
+            elms.forEach(function(item) {
                 item.setAttribute('type', 'image/png');
             });
             return elms;
@@ -581,7 +580,7 @@
                         old.parentNode.removeChild(old);
                     }
                 } else {
-                    _orig.forEach(function (icon) {
+                    _orig.forEach(function(icon) {
                         icon.setAttribute('href', url);
                     });
                 }
@@ -645,66 +644,66 @@
             h: 0.6,
             o: 0.0
         }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.1
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.2
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.3
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.4
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.5
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.6
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.7
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.8
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 0.9
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 1.0
-        }];
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.1
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.2
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.3
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.4
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.5
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.6
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.7
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.8
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 0.9
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 1.0
+            }];
         animation.types.none = [{
             x: 0.4,
             y: 0.4,
@@ -719,42 +718,42 @@
             h: 0,
             o: 1
         }, {
-            x: 0.9,
-            y: 0.9,
-            w: 0.1,
-            h: 0.1,
-            o: 1
-        }, {
-            x: 0.8,
-            y: 0.8,
-            w: 0.2,
-            h: 0.2,
-            o: 1
-        }, {
-            x: 0.7,
-            y: 0.7,
-            w: 0.3,
-            h: 0.3,
-            o: 1
-        }, {
-            x: 0.6,
-            y: 0.6,
-            w: 0.4,
-            h: 0.4,
-            o: 1
-        }, {
-            x: 0.5,
-            y: 0.5,
-            w: 0.5,
-            h: 0.5,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }];
+                x: 0.9,
+                y: 0.9,
+                w: 0.1,
+                h: 0.1,
+                o: 1
+            }, {
+                x: 0.8,
+                y: 0.8,
+                w: 0.2,
+                h: 0.2,
+                o: 1
+            }, {
+                x: 0.7,
+                y: 0.7,
+                w: 0.3,
+                h: 0.3,
+                o: 1
+            }, {
+                x: 0.6,
+                y: 0.6,
+                w: 0.4,
+                h: 0.4,
+                o: 1
+            }, {
+                x: 0.5,
+                y: 0.5,
+                w: 0.5,
+                h: 0.5,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }];
         animation.types.popFade = [{
             x: 0.75,
             y: 0.75,
@@ -762,42 +761,42 @@
             h: 0,
             o: 0
         }, {
-            x: 0.65,
-            y: 0.65,
-            w: 0.1,
-            h: 0.1,
-            o: 0.2
-        }, {
-            x: 0.6,
-            y: 0.6,
-            w: 0.2,
-            h: 0.2,
-            o: 0.4
-        }, {
-            x: 0.55,
-            y: 0.55,
-            w: 0.3,
-            h: 0.3,
-            o: 0.6
-        }, {
-            x: 0.50,
-            y: 0.50,
-            w: 0.4,
-            h: 0.4,
-            o: 0.8
-        }, {
-            x: 0.45,
-            y: 0.45,
-            w: 0.5,
-            h: 0.5,
-            o: 0.9
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }];
+                x: 0.65,
+                y: 0.65,
+                w: 0.1,
+                h: 0.1,
+                o: 0.2
+            }, {
+                x: 0.6,
+                y: 0.6,
+                w: 0.2,
+                h: 0.2,
+                o: 0.4
+            }, {
+                x: 0.55,
+                y: 0.55,
+                w: 0.3,
+                h: 0.3,
+                o: 0.6
+            }, {
+                x: 0.50,
+                y: 0.50,
+                w: 0.4,
+                h: 0.4,
+                o: 0.8
+            }, {
+                x: 0.45,
+                y: 0.45,
+                w: 0.5,
+                h: 0.5,
+                o: 0.9
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }];
         animation.types.slide = [{
             x: 0.4,
             y: 1,
@@ -805,48 +804,48 @@
             h: 0.6,
             o: 1
         }, {
-            x: 0.4,
-            y: 0.9,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.9,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.8,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.7,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.6,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.5,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }, {
-            x: 0.4,
-            y: 0.4,
-            w: 0.6,
-            h: 0.6,
-            o: 1
-        }];
+                x: 0.4,
+                y: 0.9,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.9,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.8,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.7,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.6,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.5,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }, {
+                x: 0.4,
+                y: 0.4,
+                w: 0.6,
+                h: 0.6,
+                o: 1
+            }];
         /**
          * Run animation
          * @param {Object} opt Animation options
