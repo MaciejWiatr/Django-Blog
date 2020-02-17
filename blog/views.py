@@ -15,5 +15,5 @@ def index(request):
 def detail(request, pk):
     template = 'blog/detail.html'
     post = Post.objects.get(id=pk)
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(active=True).order_by('-created_on')
     return render(request, "blog/detail.html", {'post': post, 'comments': comments})

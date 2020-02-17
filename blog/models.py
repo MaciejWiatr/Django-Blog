@@ -10,7 +10,7 @@ def img_path(instance, filename):
 
 class Post(models.Model):
     title = models.CharField(max_length=20, blank=False)
-    text = models.CharField(max_length=300, blank=True)
+    text = models.TextField(max_length=256)
     image = models.ImageField(upload_to=img_path)
 
     def get_absolute_url(self):
