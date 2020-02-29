@@ -24,22 +24,24 @@ SECRET_KEY = '*h5+(a#0n)n#l_m0hvfqdwwn+b6y6u$fn$yia2^8m91w$g*+*o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dettlaff00.pythonanywhere.com']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
-    'colorfield',
+    'admin_interface',  # Django admin interface theme
+    'colorfield',  # Django admin interface theme
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup.apps.CleanupConfig',  # Django cleaning app
+    # my apps
     'blog',
 ]
-X_FRAME_OPTIONS = 'SAMEORIGIN'  # only if django version >= 3.0
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # only if django version >= 3.0 Theme option
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

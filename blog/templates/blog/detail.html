@@ -11,9 +11,41 @@
 {{ post.text }}
 
 <h2>Comments:</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Dodaj</button>
+</form>
+<hr>
 {% for comment in comments %}
     <p>{{ comment.text }}</p>
     <p>opublikowano {{ comment.created_on.date }}</p>
+    {% if request.user.is_staff %}
+        <form action="/comment/delete/{{ comment.id }}">
+            <button type="submit">delete</button>
+        </form>
+    {% endif %}
 {% endfor %}
+
+{% if request.user.is_staff %}
+    <hr>
+    <h1>Not accepted</h1>
+    {% for comment in not_accepted %}
+
+        <p>{{ comment.text }}</p>
+        <p>opublikowano {{ comment.created_on.date }}</p>
+        <form action="/comment/activate/{{ comment.id }}">
+            <button type="submit">activate</button>
+        </form>
+        <form action="/comment/delete/{{ comment.id }}">
+            <button type="submit">delete</button>
+        </form>
+
+
+    {% endfor %}
+
+{% endif %}
+
+
 </body>
 </html>
