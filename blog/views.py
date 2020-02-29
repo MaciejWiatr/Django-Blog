@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import CommentForm
@@ -31,6 +32,7 @@ def post_detail(request, pk):
                        'form': form})
 
 
+@login_required
 def activate_comment(request, action, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment_post = comment.post.id

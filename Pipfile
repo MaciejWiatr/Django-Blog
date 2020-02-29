@@ -10,6 +10,8 @@ pylint = "*"
 django = "*"
 pillow = "*"
 django-admin-interface = "*"
+django-cleanup = "*"
+pipfile = "*"
 
 [requires]
 python_version = "3.8"
