@@ -73,4 +73,3 @@ class PostCreate(FormView):
 class PostUpdate(UpdateView):
     model = Post
     fields = ['title', 'text', 'image', 'files']
-    
