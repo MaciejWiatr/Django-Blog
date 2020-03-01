@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',  # Django cleaning app
+    'ckeditor',
+    'ckeditor_uploader',
     # my apps
     'blog',
 ]
@@ -119,3 +121,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+CKEDITOR_UPLOAD_PATH = "uploads/"

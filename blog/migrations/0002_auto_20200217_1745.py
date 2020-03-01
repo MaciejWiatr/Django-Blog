@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='post',
             name='image',
-            field=models.ImageField(upload_to=blog.models.img_path),
+            field=models.ImageField(upload_to=blog.models.file_path_gen),
         ),
         migrations.CreateModel(
             name='Comment',

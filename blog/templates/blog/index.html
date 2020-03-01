@@ -9,14 +9,21 @@
 </head>
 <body>
 
+{% if messages %}
+    {% for mess in messages %}
+
+        <div>{{ mess }}</div>
+
+    {% endfor %}
+
+{% endif %}
 
 {% for post in posts %}
 
     <div class="post">
-        <img style="max-width: 100px" src="{{ post.image.url }}">
+        <img style="max-width: 100px" src="{{ post.image.url }}" alt="img">
         <h1>{{ post.title }}</h1>
-        <p>{{ post.text }}</p>
-        <!--<a href="{% url 'blog:post_detail' post.pk %}">Detal :)</a>-->
+        <p>{{ post.text|striptags|safe|truncatewords:20 }}</p>
         <a href="{{ post.get_absolute_url }}">Detal :)</a>
     </div>
 
