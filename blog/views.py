@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
-
-from .forms import CommentForm
+from django.views.generic.edit import CreateView, FormView, UpdateView
+from .forms import CommentForm, PostForm
 from .models import Post, Comment
 
 
@@ -37,7 +37,7 @@ def post_detail(request, slug):
 @staff_member_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    messages.info(request,f'Post "{post.title[:15]}" id:{post.id} został usunięty')
+    messages.info(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
     post.delete()
     return redirect("blog:index")
 
@@ -49,7 +49,28 @@ def activate_comment(request, action, pk):
     if action == 'activate':
         comment.active = True
         comment.save()
+        messages.info(request, 'Komentarz został zaakceptowany')
         return redirect("blog:post_detail", slug=comment_post.slug)
     elif action == 'delete':
         comment.delete()
+        messages.info(request, 'Komentarz został usunięty')
         return redirect("blog:post_detail", slug=comment_post.slug)
+
+
+class PostCreate(FormView):
+    template_name = "blog/post_form.html"
+    model = Post
+    form_class = PostForm
+    success_url = '/'
+    fields = ['title', 'text', 'image', 'files']
+
+    def form_valid(self, form):
+        post = form.save()
+        post.save()
+        return super().form_valid(form)
+
+
+class PostUpdate(UpdateView):
+    model = Post
+    fields = ['title', 'text', 'image', 'files']
+    

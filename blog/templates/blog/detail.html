@@ -1,61 +1,68 @@
+{% extends "blog/base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
+    <title>{% block title %}{{ post.title }}{% endblock %}</title>
 </head>
 <body>
-<a href="{% url "blog:index" %}">Wróć na główną</a>
-<h2>Post detail:</h2>
-{{ post.title }}
-{{ post.text | safe }}
-{{ post.media | safe }}
 
-<h2>Comments:</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Dodaj</button>
-</form>
-{% if messages %}
-    {% for mess in messages %}
+{% block content %}
 
-        <div>{{ mess }}</div>
+    <a href="{% url "blog:index" %}">Wróć na główną</a>
+    <h2>Post detail:</h2>
+    {{ post.title }}
+    {{ post.text | safe }}
+    {{ post.media | safe }}
 
-    {% endfor %}
+    <h3>Comments:</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success" type="submit">Dodaj</button>
+    </form>
+    {% if messages %}
+        {% for mess in messages %}
 
-{% endif %}
-<hr>
-{% for comment in comments %}
-    <p>{{ comment.text }}</p>
-    <p>opublikowano {{ comment.created_on.date }}</p>
-    {% if request.user.is_staff %}
-        <form action="/comment/delete/{{ comment.id }}">
-            <button type="submit">delete</button>
-        </form>
+            <div class="alert alert-success">{{ mess }}</div>
+
+        {% endfor %}
+
     {% endif %}
-{% endfor %}
-
-{% if request.user.is_staff %}
     <hr>
-    <h1>Not accepted</h1>
-    {% for comment in not_accepted %}
-
+    {% for comment in comments %}
         <p>{{ comment.text }}</p>
         <p>opublikowano {{ comment.created_on.date }}</p>
-        <p>id: {{ comment.id }}</p>
-        <form action="/comment/activate/{{ comment.id }}">
-            <button type="submit">activate</button>
-        </form>
-        <form action="/comment/delete/{{ comment.id }}">
-            <button type="submit">delete</button>
-        </form>
-
-
+        {% if request.user.is_staff %}
+            <form action="/comment/delete/{{ comment.id }}">
+                <button class="btn btn-danger" type="submit">delete</button>
+            </form>
+        {% endif %}
     {% endfor %}
 
-{% endif %}
+    {% if request.user.is_staff %}
+        <hr>
+        <h3>Not accepted</h3>
+        {% for comment in not_accepted %}
 
+            <p>{{ comment.text }}</p>
+            <p>opublikowano {{ comment.created_on.date }}</p>
+            <p>id: {{ comment.id }}</p>
+            <form action="/comment/activate/{{ comment.id }}">
+                <button class="btn btn-success" type="submit">activate</button>
+            </form>
+            <form action="/comment/delete/{{ comment.id }}">
+                <button class="btn btn-danger" type="submit">delete</button>
+            </form>
+
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+{% endblock %}
 
 </body>
 </html>

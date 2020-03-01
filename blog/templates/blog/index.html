@@ -1,32 +1,49 @@
-{% load static %}
-<!DOCTYPE html>
+{% extends "blog/base.html" %}
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="{% static "blog/img/favicon.ico" %}"/>
+
     <meta charset="UTF-8">
-    <title>Blog Macieja Wiatra</title>
-    <link rel="stylesheet" href="{% static "blog/css/style.css" %}" type="text/css">
+    <title>{% block title %}Blog Macieja Wiatra{% endblock %}</title>
+
 </head>
 <body>
+{% block content %}
 
-{% if messages %}
-    {% for mess in messages %}
+    {% if messages %}
+        {% for mess in messages %}
 
-        <div>{{ mess }}</div>
+            <div class="alert alert-success">{{ mess }}</div>
+
+        {% endfor %}
+
+    {% endif %}
+
+    {% for post in posts %}
+
+        <div class="post" style="border-bottom: 2px solid grey">
+            <img style="max-width: 100px" src="{{ post.image.url }}" alt="img">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text|striptags|safe|truncatewords:20 }}</p>
+            <a href="{{ post.get_absolute_url }}">Detal :)</a>
+            <form action="/post/delete/{{ post.slug }}/">
+                <button type="submit">Delete post</button>
+            </form>
+            <form action="/post/update/{{ post.slug }}/">
+                <button type="submit">Update post</button>
+            </form>
+        </div>
 
     {% endfor %}
 
-{% endif %}
+    <form action="/post/create">
+        <button class="btn btn-success">
 
-{% for post in posts %}
+            Add new post
+        </button>
 
-    <div class="post">
-        <img style="max-width: 100px" src="{{ post.image.url }}" alt="img">
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.text|striptags|safe|truncatewords:20 }}</p>
-        <a href="{{ post.get_absolute_url }}">Detal :)</a>
-    </div>
+    </form>
 
-{% endfor %}
+{% endblock %}
+
+
 </body>
-</html>

@@ -1,7 +1,8 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.forms import ModelForm
 
-from .models import Comment
+from .models import Comment, Post
 
 
 class CommentForm(ModelForm):
@@ -10,4 +11,13 @@ class CommentForm(ModelForm):
         fields = ['text']
         widgets = {
             'text': forms.Textarea(attrs={'class': 'comment-text'})
+        }
+
+
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'text', 'image', 'files']
+        widgets = {
+            'text': forms.CharField(widget=CKEditorWidget())
         }
