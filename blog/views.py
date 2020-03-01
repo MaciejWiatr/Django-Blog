@@ -6,14 +6,16 @@ from .forms import CommentForm, PostForm
 from .models import Post, Comment
 
 
-# Create your views here.
-
 def index(request):
+    """
+    Main view
+    """
     template = 'blog/index.html'
     posts = Post.objects.all()
     return render(request, template, {'posts': posts})
 
 
+# Post related views
 def post_detail(request, slug):
     template = 'blog/detail.html'
     post = get_object_or_404(Post, slug=slug)
@@ -34,29 +36,6 @@ def post_detail(request, slug):
                        'form': form})
 
 
-@staff_member_required
-def delete_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    messages.info(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
-    post.delete()
-    return redirect("blog:index")
-
-
-@staff_member_required
-def activate_comment(request, action, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment_post = comment.post
-    if action == 'activate':
-        comment.active = True
-        comment.save()
-        messages.info(request, 'Komentarz został zaakceptowany')
-        return redirect("blog:post_detail", slug=comment_post.slug)
-    elif action == 'delete':
-        comment.delete()
-        messages.info(request, 'Komentarz został usunięty')
-        return redirect("blog:post_detail", slug=comment_post.slug)
-
-
 class PostCreate(FormView):
     template_name = "blog/post_form.html"
     model = Post
@@ -73,3 +52,28 @@ class PostCreate(FormView):
 class PostUpdate(UpdateView):
     model = Post
     fields = ['title', 'text', 'image', 'files']
+
+
+@staff_member_required
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    messages.info(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
+    post.delete()
+    return redirect("blog:index")
+
+
+# Comments related views
+
+@staff_member_required
+def activate_comment(request, action, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment_post = comment.post
+    if action == 'activate':
+        comment.active = True
+        comment.save()
+        messages.info(request, 'Komentarz został zaakceptowany')
+        return redirect("blog:post_detail", slug=comment_post.slug)
+    elif action == 'delete':
+        comment.delete()
+        messages.info(request, 'Komentarz został usunięty')
+        return redirect("blog:post_detail", slug=comment_post.slug)
