@@ -16,6 +16,14 @@
     {{ form.as_p }}
     <button type="submit">Dodaj</button>
 </form>
+{% if messages %}
+    {% for mess in messages %}
+
+        <div>{{ mess }}</div>
+
+    {% endfor %}
+
+{% endif %}
 <hr>
 {% for comment in comments %}
     <p>{{ comment.text }}</p>
@@ -34,6 +42,7 @@
 
         <p>{{ comment.text }}</p>
         <p>opublikowano {{ comment.created_on.date }}</p>
+        <p>id: {{ comment.id }}</p>
         <form action="/comment/activate/{{ comment.id }}">
             <button type="submit">activate</button>
         </form>

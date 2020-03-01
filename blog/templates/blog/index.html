@@ -16,7 +16,8 @@
         <img style="max-width: 100px" src="{{ post.image.url }}">
         <h1>{{ post.title }}</h1>
         <p>{{ post.text }}</p>
-        <a href="{% url 'blog:detail' post.pk %}">Detal :)</a>
+        <!--<a href="{% url 'blog:post_detail' post.pk %}">Detal :)</a>-->
+        <a href="{{ post.get_absolute_url }}">Detal :)</a>
     </div>
 
 {% endfor %}

@@ -15,5 +15,10 @@ class CommentAdmin(admin.ModelAdmin):
         queryset.update(active=True)
 
 
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'text', 'image', 'slug')
+    prepopulated_fields = {'slug': ('title',)}
+
+
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Post)
+admin.site.register(Post, PostAdmin)
