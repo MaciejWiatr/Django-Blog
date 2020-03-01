@@ -8,7 +8,8 @@
 <a href="{% url "blog:index" %}">Wróć na główną</a>
 <h2>Post detail:</h2>
 {{ post.title }}
-{{ post.text }}
+{{ post.text | safe }}
+{{ post.media | safe }}
 
 <h2>Comments:</h2>
 <form method="post">
