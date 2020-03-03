@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',  # Django cleaning app
     'ckeditor',
     'ckeditor_uploader',
+    'taggit',
     # my apps
     'blog',
 ]
@@ -122,3 +123,15 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'basic',
+        'extraPlugins': ','.join(
+            [
+                'codesnippet'
+            ]
+        ),
+        'skin': 'moono'
+    }
+}

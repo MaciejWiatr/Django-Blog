@@ -31,8 +31,9 @@ def post_detail(request, slug):
         form = CommentForm
         accepted_comments = post.comments.filter(active=True).order_by('-created_on')
         not_accepted_comments = post.comments.filter(active=False).order_by('-created_on')
+        tags = post.tags.all()
         return render(request, "blog/detail.html",
-                      {'post': post, 'comments': accepted_comments, 'not_accepted': not_accepted_comments,
+                      {'post': post, 'comments': accepted_comments, 'not_accepted': not_accepted_comments, 'tags': tags,
                        'form': form})
 
 
