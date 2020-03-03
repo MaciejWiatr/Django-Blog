@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from .forms import CommentForm, PostForm
@@ -12,6 +13,13 @@ def index(request):
     """
     template = 'blog/index.html'
     posts = Post.objects.all()
+    query = request.GET.get("q")
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) |
+            Q(tags__name__icontains=query) |
+            Q(text__icontains=query)
+        ).distinct()
     return render(request, template, {'posts': posts})
 
 
