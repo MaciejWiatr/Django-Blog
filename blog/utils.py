@@ -20,8 +20,19 @@ def compress_image(uploadedImage):
     imageTemproary = Image.open(uploadedImage)
     outputIoStream = BytesIO()
     imageTemproaryResized = imageTemproary.resize((1020, 573))
-    imageTemproary.save(outputIoStream, format='JPEG', quality=60)
+    try:
+        imageTemproary = pure_pil_alpha_to_color_v2(imageTemproary)
+    except:
+        pass
+    imageTemproary.save(outputIoStream, format='JPEG', quality=80)
     outputIoStream.seek(0)
     uploadedImage = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.jpg" % uploadedImage.name.split('.')[0],
                                          'image/jpeg', sys.getsizeof(outputIoStream), None)
     return uploadedImage
+
+
+def pure_pil_alpha_to_color_v2(image, color=(255, 255, 255)):
+    image.load()  # needed for split()
+    background = Image.new('RGB', image.size, color)
+    background.paste(image, mask=image.split()[3])  # 3 is the alpha channel
+    return background
