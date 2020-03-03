@@ -3,7 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
-from .utils import file_path_gen
+from .utils import file_path_gen, compress_image
 
 
 class Post(models.Model):
@@ -19,7 +19,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        print(self.slug)
+        if not self.id:
+            self.image = compress_image(self.image)
+        # super(Post, self).save(*args, **kwargs)
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
