@@ -16,8 +16,13 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', 'image', 'slug')
+    list_display = ('title', 'text', 'image', 'slug', 'tag_list')
+    search_fields = ('text',)
     prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('tags',)
+
+    def tag_list(self, obj):
+        return u", ".join(o.name for o in obj.tags.all())
 
 
 admin.site.register(Comment, CommentAdmin)

@@ -18,6 +18,15 @@
 
     {% endif %}
 
+    <h1>
+        Search
+    </h1>
+    <form method="GET" , action="">
+        <input type="text" name="q" placeholder="Szukaj">
+        <input type="submit" value="Szukaj">
+
+    </form>
+
     {% for post in posts %}
 
         <div class="post" style="border-bottom: 2px solid grey">

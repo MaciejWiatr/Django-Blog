@@ -2,8 +2,8 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-
-from .utils import file_path_gen
+from taggit.managers import TaggableManager
+from .utils import file_path_gen, compress_image
 
 
 class Post(models.Model):
@@ -12,6 +12,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to=file_path_gen, default="no-img.png")
     slug = models.SlugField(null=False, unique=True)
     files = models.FileField(upload_to=file_path_gen, null=True, blank=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return f'{self.title}'
@@ -19,7 +20,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        print(self.slug)
+        if not self.id:
+            self.image = compress_image(self.image)
+        # super(Post, self).save(*args, **kwargs)
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
