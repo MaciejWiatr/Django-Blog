@@ -9,6 +9,33 @@
 <body>
 {% block content %}
 
+
+
+
+    <section class="title-section">
+
+        <h1>Blog o programowaniu</h1>
+        <h2>Maciej Wiatr</h2>
+
+        <div class="title-cfa">
+            <button>
+                Wpisy
+            </button>
+            <button>
+                YouTube
+            </button>
+
+        </div>
+
+    </section>
+    <nav class="nav info-nav">
+        <a class="nav-link" href="#">
+            Najnowszy artykuł:
+        </a>
+        <a class="nav-link" href="#">
+            Najnowszy film:
+        </a>
+    </nav>
     {% if messages %}
         {% for mess in messages %}
 
@@ -17,40 +44,44 @@
         {% endfor %}
 
     {% endif %}
-
-    <h1>
-        Search
-    </h1>
-    <form method="GET" , action="">
-        <input type="text" name="q" placeholder="Szukaj">
-        <input type="submit" value="Szukaj">
-
-    </form>
-
-    {% for post in posts %}
-
-        <div class="post" style="border-bottom: 2px solid grey">
-            <img style="max-width: 100px" src="{{ post.image.url }}" alt="img">
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.text|striptags|safe|truncatewords:20 }}</p>
-            <a href="{{ post.get_absolute_url }}">Detal :)</a>
-            <form action="/post/delete/{{ post.slug }}/">
-                <button type="submit">Delete post</button>
-            </form>
-            <form action="/post/update/{{ post.slug }}/">
-                <button type="submit">Update post</button>
+    <section class="article-section">
+        <div class="search-wrapper">
+            <form method="GET" , action="">
+                <input class="search-box" type="text" name="q" placeholder="Szukaj">
+                <button class="search-button" type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>
 
-    {% endfor %}
+    </section>
+    <div class="container-fluid">
+        <div class="row justify-content-around articles-wrapper">
+            {% for post in posts %}
+                <div class="card article col-md-3 mt-2">
+                    <img class="card-img-top" src="{{ post.image.url }}" alt="Article image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.text|striptags|safe|truncatewords:20 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Czytaj</a>
+                        {% if request.user.is_staff %}
+                            <form action="/post/delete/{{ post.slug }}/">
+                                <button class="btn btn-danger" type="submit">Delete post</button>
+                            </form>
+                            <form action="/post/update/{{ post.slug }}/">
+                                <button class="btn btn-success" type="submit">Update post</button>
+                            </form>
+                        {% endif %}
+                    </div>
 
-    <form action="/post/create">
-        <button class="btn btn-success">
+                </div>
+            {% endfor %}
+        </div>
 
-            Add new post
-        </button>
 
-    </form>
+    </div>
+
+
+
+
 
 {% endblock %}
 
