@@ -1,6 +1,8 @@
 {% load static %}
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{% static "blog/img/favicon.ico" %}"/>
     <title>{% block title %}
@@ -12,8 +14,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        blog.maciejwiatr.me
+    <a class="navbar-brand" href="/">
+        <span style="color: #00cc66; font-weight: bold">blog</span>.maciejwiatr.me
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,12 +34,10 @@
             </li>
             {% if request.user.is_staff %}
                 <li>
-                    <form style="height: auto" action="/post/create">
+                    <form style="height: 100%; overflow: hidden; margin:0;" action="/post/create">
                         <button class="btn btn-success">
-
                             Add new post
                         </button>
-
                     </form>
                 </li>
             {% endif %}

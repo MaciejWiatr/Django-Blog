@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load static %}
 <html lang="en">
 <head>
 
@@ -12,7 +13,7 @@
 
 
 
-    <section class="title-section">
+    <section class="title-section" style="background-image: url('{% static "blog/img/background.jpg" %}')">
 
         <h1>Blog o programowaniu</h1>
         <h2>Maciej Wiatr</h2>
@@ -54,31 +55,45 @@
 
     </section>
     <div class="container-fluid">
-        <div class="row justify-content-around articles-wrapper">
+        <div class="row justify-content-around articles-wrapper mb-5">
             {% for post in posts %}
-                <div class="card article col-md-3 mt-2">
-                    <img class="card-img-top" src="{{ post.image.url }}" alt="Article image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.text|striptags|safe|truncatewords:20 }}</p>
-                        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Czytaj</a>
-                        {% if request.user.is_staff %}
-                            <form action="/post/delete/{{ post.slug }}/">
-                                <button class="btn btn-danger" type="submit">Delete post</button>
-                            </form>
-                            <form action="/post/update/{{ post.slug }}/">
-                                <button class="btn btn-success" type="submit">Update post</button>
-                            </form>
-                        {% endif %}
+                <div class="col-md-6 col-lg-4 mt-3">
+                    <div class="card" style="width: 100%">
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                        <div class="card-body">
+                            {{ post.pub_date }}
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            {% for tag in post.tags.all %}
+                                <p class="post-tag">{{ tag.name }}</p>
+                            {% endfor %}
+                            <p class="card-text">{{ post.text|striptags|safe|truncatewords:10 }}</p>
+                            <a href="{{ post.get_absolute_url }}">
+                                <button class="button-simple">Czytaj</button>
+                            </a>
+                            {% if request.user.is_staff %}
+                                <hr>
+                                <h4>Admin:</h4>
+                                <div class="post-admin-manage">
+                                    <form action="/post/delete/{{ post.slug }}/">
+                                        <button class="button-simple" type="submit">Delete post</button>
+                                    </form>
+                                    <form action="/post/update/{{ post.slug }}/">
+                                        <button class="button-simple ml-2" type="submit">Update post</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
-
                 </div>
+
             {% endfor %}
         </div>
 
 
     </div>
-
+    <footer class="footer">
+        <p>Created by Maciej Wiatr</p>
+    </footer>
 
 
 
