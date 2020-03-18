@@ -15,10 +15,7 @@ def index(request):
     template = 'blog/index.html'
     posts = Post.objects.all()
     query = request.GET.get("q")
-    try:
-        latest = posts.order_by('-pub_date')[0]
-    except:
-        latest = ""
+    latest = Post.objects.latest()
     if query:
         posts = posts.filter(
             Q(title__icontains=query) |
@@ -46,8 +43,8 @@ def post_detail(request, slug):
             return redirect("blog:post_detail", slug=slug)
     else:
         form = CommentForm
-        accepted_comments = post.comments.filter(active=True).order_by('-created_on')
-        not_accepted_comments = post.comments.filter(active=False).order_by('-created_on')
+        accepted_comments = post.comments.accepted()
+        not_accepted_comments = post.comments.not_accepted()
         tags = post.tags.all()
         return render(request, "blog/detail.html",
                       {'post': post, 'comments': accepted_comments, 'not_accepted': not_accepted_comments, 'tags': tags,

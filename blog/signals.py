@@ -1,8 +1,9 @@
 import os
 import shutil
 from pathlib import Path
+from django.template.defaultfilters import slugify
 from .models import Post
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django_blog.settings import MEDIA_ROOT, BASE_DIR
 
@@ -16,3 +17,9 @@ def clear_files(sender, instance, **kwargs):
         if root in directory.parents:  # Extra safety option to guarantee safety to files outside django dir
             print(f'Deleting media folder: {media_path}')
             shutil.rmtree(media_path)
+
+
+@receiver(post_save, sender=Post)
+def create_slug(sender, instance, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.title)
