@@ -11,16 +11,25 @@ def index(request):
     """
     Main view
     """
+
     template = 'blog/index.html'
     posts = Post.objects.all()
     query = request.GET.get("q")
+    try:
+        latest = posts.order_by('-pub_date')[0]
+    except:
+        latest = ""
     if query:
         posts = posts.filter(
             Q(title__icontains=query) |
             Q(tags__name__icontains=query) |
             Q(text__icontains=query)
         ).distinct()
-    return render(request, template, {'posts': posts})
+    context = {
+        'posts': posts,
+        'latest': latest
+    }
+    return render(request, template, context)
 
 
 # Post related views
@@ -33,7 +42,7 @@ def post_detail(request, slug):
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
-            messages.info(request, "Twój komentarz został dodany i czeka na zaakceptowanie")
+            messages.success(request, "Twój komentarz został dodany i czeka na zaakceptowanie")
             return redirect("blog:post_detail", slug=slug)
     else:
         form = CommentForm
@@ -66,7 +75,7 @@ class PostUpdate(UpdateView):
 @staff_member_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    messages.info(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
+    messages.success(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
     post.delete()
     return redirect("blog:index")
 
@@ -80,9 +89,9 @@ def activate_comment(request, action, pk):
     if action == 'activate':
         comment.active = True
         comment.save()
-        messages.info(request, 'Komentarz został zaakceptowany')
+        messages.success(request, 'Komentarz został zaakceptowany')
         return redirect("blog:post_detail", slug=comment_post.slug)
     elif action == 'delete':
         comment.delete()
-        messages.info(request, 'Komentarz został usunięty')
+        messages.warning(request, 'Komentarz został usunięty')
         return redirect("blog:post_detail", slug=comment_post.slug)

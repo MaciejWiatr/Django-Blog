@@ -1,56 +1,117 @@
 {% extends "blog/base.html" %}
+{% load static %}
 <html lang="en">
 <head>
 
     <meta charset="UTF-8">
     <title>{% block title %}Blog Macieja Wiatra{% endblock %}</title>
+    {% block additional_styling %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    {% endblock %}
 
 </head>
 <body>
 {% block content %}
 
-    {% if messages %}
-        {% for mess in messages %}
 
-            <div class="alert alert-success">{{ mess }}</div>
 
-        {% endfor %}
 
-    {% endif %}
+    <section class="title-section" style="background-image: url('{% static "blog/img/background.jpg" %}')">
 
-    <h1>
-        Search
-    </h1>
-    <form method="GET" , action="">
-        <input type="text" name="q" placeholder="Szukaj">
-        <input type="submit" value="Szukaj">
+        <h1>Blog o programowaniu</h1>
+        <h2>Maciej Wiatr</h2>
 
-    </form>
+        <div class="title-cfa">
+            <button>
+                Wpisy
+            </button>
+            <button>
+                YouTube
+            </button>
 
-    {% for post in posts %}
+        </div>
 
-        <div class="post" style="border-bottom: 2px solid grey">
-            <img style="max-width: 100px" src="{{ post.image.url }}" alt="img">
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.text|striptags|safe|truncatewords:20 }}</p>
-            <a href="{{ post.get_absolute_url }}">Detal :)</a>
-            <form action="/post/delete/{{ post.slug }}/">
-                <button type="submit">Delete post</button>
-            </form>
-            <form action="/post/update/{{ post.slug }}/">
-                <button type="submit">Update post</button>
+    </section>
+    <nav class="nav info-nav">
+        <a class="nav-link" href="{{ latest.get_absolute_url }}">
+            Najnowszy artykuł: {{ latest.title }}
+        </a>
+        <a class="nav-link" href="#">
+            Najnowszy film: Wkrótce!
+        </a>
+    </nav>
+
+    <section class="article-section">
+        <div class="search-wrapper">
+            <form method="GET" , action="">
+                <input class="search-box" type="text" name="q" placeholder="Szukaj">
+                <button class="search-button" type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>
 
-    {% endfor %}
+    </section>
+    <div class="container-fluid">
+        <div class="row justify-content-around articles-wrapper mb-5">
+            {% for post in posts %}
+                <div data-aos="fade-up" class="col-md-6 col-lg-4 mt-3">
+                    <div class="card" style="width: 100%">
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                        <div class="card-body">
+                            {{ post.pub_date }}
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            {% for tag in post.tags.all %}
+                                <p class="post-tag">{{ tag.name }}</p>
+                            {% endfor %}
+                            <p class="card-text">{{ post.text|striptags|safe|truncatewords:10 }}</p>
+                            <a href="{{ post.get_absolute_url }}">
+                                <button class="button-simple">Czytaj</button>
+                            </a>
+                            {% if request.user.is_staff %}
+                                <hr>
+                                <h4>Admin:</h4>
+                                <div class="post-admin-manage">
+                                    <form action="/post/delete/{{ post.slug }}/">
+                                        <button class="button-simple" type="submit">Delete post</button>
+                                    </form>
+                                    <form action="/post/update/{{ post.slug }}/">
+                                        <button class="button-simple ml-2" type="submit">Update post</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
 
-    <form action="/post/create">
-        <button class="btn btn-success">
+            {% endfor %}
+        </div>
 
-            Add new post
-        </button>
 
-    </form>
+    </div>
+    <footer class="footer">
+        <p>Created by Maciej Wiatr</p>
+    </footer>
+
+    <script>
+        AOS.init();
+        {% if messages %}
+            {% for mess in messages %}
+                Swal.fire({
+                    title: '{{mess.tags|capfirst}}',
+                    text: '{{ mess|safe }}',
+                    icon: '{{mess.tags}}',
+                    confirmButtonText: 'ok',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            {% endfor %}
+        {% endif %}
+
+    </script>
+
+
+
 
 {% endblock %}
 

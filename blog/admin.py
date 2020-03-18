@@ -16,7 +16,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', 'image', 'slug', 'tag_list')
+    list_display = ('title', 'text', 'image', 'slug', 'tag_list', 'pub_date')
     search_fields = ('text',)
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('tags',)

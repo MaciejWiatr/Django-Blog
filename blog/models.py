@@ -2,6 +2,7 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils import timezone
 from taggit.managers import TaggableManager
 from .utils import file_path_gen, compress_image
 
@@ -12,6 +13,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to=file_path_gen, default="no-img.png")
     slug = models.SlugField(null=False, unique=True)
     files = models.FileField(upload_to=file_path_gen, null=True, blank=True)
+    pub_date = models.DateTimeField('date created', default=timezone.now)
     tags = TaggableManager()
 
     def __str__(self):
