@@ -23,11 +23,17 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.image = compress_image(self.image)  # Signals somehow dont seem to work in compression case :/
+            self.image = compress_image(self.image)  # Signals somehow dont seem to work in image compression case :/
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('blog:post_delete', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('blog:post_update', kwargs={'slug': self.slug})
 
 
 class Comment(models.Model):
@@ -42,6 +48,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment nr.{self.id} | {self.text[:10]}"
+
+    def get_delete_url(self):
+        return reverse('blog:activate_comment', kwargs={'action': 'delete', 'pk': self.pk})
+
+    def get_activate_url(self):
+        return reverse('blog:activate_comment', kwargs={'action': 'activate', 'pk': self.pk})
 
 
 class NewsletterSubcription(models.Model):

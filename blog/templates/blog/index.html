@@ -72,12 +72,12 @@
                                 <hr>
                                 <h4>Admin:</h4>
                                 <div class="post-admin-manage">
-                                    <form action="/post/delete/{{ post.slug }}/">
+                                    <a href="{{ post.get_delete_url }}">
                                         <button class="button-simple" type="submit">Delete post</button>
-                                    </form>
-                                    <form action="/post/update/{{ post.slug }}/">
-                                        <button class="button-simple ml-2" type="submit">Update post</button>
-                                    </form>
+                                    </a>
+                                    <a href="{{ post.get_update_url }}">
+                                        <button class="button-simple ml-3" type="submit">Update post</button>
+                                    </a>
                                 </div>
                             {% endif %}
                         </div>
