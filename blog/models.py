@@ -32,7 +32,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    text = models.CharField(max_length=128)
+    text = models.CharField(max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
     objects = CommentManager()
@@ -42,3 +42,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment nr.{self.id} | {self.text[:10]}"
+
+
+class NewsletterSubcription(models.Model):
+    email = models.EmailField(max_length=255)
+    active = models.BooleanField(default=True)
+    join_date = models.DateTimeField('date created', default=timezone.now)
+
+    def __str__(self):
+        return self.email
