@@ -5,6 +5,11 @@
 
     <meta charset="UTF-8">
     <title>{% block title %}Blog Macieja Wiatra{% endblock %}</title>
+    {% block additional_styling %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    {% endblock %}
 
 </head>
 <body>
@@ -30,11 +35,11 @@
 
     </section>
     <nav class="nav info-nav">
-        <a class="nav-link" href="#">
-            Najnowszy artykuł:
+        <a class="nav-link" href="{{ latest.get_absolute_url }}">
+            Najnowszy artykuł: {{ latest.title }}
         </a>
         <a class="nav-link" href="#">
-            Najnowszy film:
+            Najnowszy film: Wkrótce!
         </a>
     </nav>
 
@@ -50,7 +55,7 @@
     <div class="container-fluid">
         <div class="row justify-content-around articles-wrapper mb-5">
             {% for post in posts %}
-                <div class="col-md-6 col-lg-4 mt-3">
+                <div data-aos="fade-up" class="col-md-6 col-lg-4 mt-3">
                     <div class="card" style="width: 100%">
                         <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
                         <div class="card-body">
@@ -89,6 +94,7 @@
     </footer>
 
     <script>
+        AOS.init();
         {% if messages %}
             {% for mess in messages %}
                 Swal.fire({
