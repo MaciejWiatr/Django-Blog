@@ -19,7 +19,7 @@ class CommentForm(ModelForm):
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'text', 'image', 'files', 'tags']
+        fields = ['image', 'title', 'tags', 'text', 'files']
         widgets = {
             'text': forms.CharField(widget=CKEditorWidget())
         }

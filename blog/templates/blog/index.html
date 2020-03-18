@@ -37,14 +37,7 @@
             Najnowszy film:
         </a>
     </nav>
-    {% if messages %}
-        {% for mess in messages %}
 
-            <div class="alert alert-success">{{ mess }}</div>
-
-        {% endfor %}
-
-    {% endif %}
     <section class="article-section">
         <div class="search-wrapper">
             <form method="GET" , action="">
@@ -94,6 +87,22 @@
     <footer class="footer">
         <p>Created by Maciej Wiatr</p>
     </footer>
+
+    <script>
+        {% if messages %}
+            {% for mess in messages %}
+                Swal.fire({
+                    title: '{{mess.tags|capfirst}}',
+                    text: '{{ mess|safe }}',
+                    icon: '{{mess.tags}}',
+                    confirmButtonText: 'ok',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            {% endfor %}
+        {% endif %}
+
+    </script>
 
 
 

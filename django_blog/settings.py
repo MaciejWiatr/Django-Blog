@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'taggit',
+    'crispy_forms',
     # my apps
     'blog',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # only if django version >= 3.0 Theme option
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,6 +134,7 @@ CKEDITOR_CONFIGS = {
                 'codesnippet'
             ]
         ),
-        'skin': 'moono'
+        'skin': 'moono',
+        'width': '100%',
     }
 }

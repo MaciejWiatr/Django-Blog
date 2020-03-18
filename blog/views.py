@@ -66,7 +66,7 @@ class PostUpdate(UpdateView):
 @staff_member_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    messages.info(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
+    messages.success(request, f'Post "{post.title[:15]}" id:{post.id} został usunięty')
     post.delete()
     return redirect("blog:index")
 
