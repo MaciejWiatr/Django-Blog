@@ -1,9 +1,15 @@
 from django.contrib import admin
+from django.contrib.admin.sites import AlreadyRegistered
+from .models import Post, Comment, NewsletterSubscription
 
-from .models import Post, Comment, NewsletterSubcription
 
+def register_models(model_list):
+    for model, model_admin in models_list.items():
+        try:
+            admin.site.register(model, model_admin)
+        except AlreadyRegistered:
+            pass
 
-# Register your models here
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('text', 'created_on', 'active')
@@ -38,6 +44,11 @@ class NewsletterAdmin(admin.ModelAdmin):
         queryset.update(active=True)
 
 
-admin.site.register(Comment, CommentAdmin)
-admin.site.register(Post, PostAdmin)
-admin.site.register(NewsletterSubcription, NewsletterAdmin)
+models_list = {
+    Comment: CommentAdmin,
+    Post: PostAdmin,
+    NewsletterSubscription: NewsletterAdmin
+}
+
+# Register your models here
+register_models(models_list)

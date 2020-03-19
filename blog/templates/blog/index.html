@@ -46,7 +46,8 @@
     <section class="article-section">
         <div class="search-wrapper">
             <form method="GET" , action="">
-                <input class="search-box" type="text" name="q" placeholder="Szukaj">
+                <input class="search-box" type="text" {% if query %}value="{{ query }}"{% endif %} name="q"
+                       placeholder="Szukaj">
                 <button class="search-button" type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>

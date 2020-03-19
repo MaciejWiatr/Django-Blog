@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
 from .utils import file_path_gen, compress_image
-from .managers import PostManager, CommentManager
+from .managers import PostManager, CommentManager, NewsletterManager
 
 
 class Post(models.Model):
@@ -56,10 +56,11 @@ class Comment(models.Model):
         return reverse('blog:activate_comment', kwargs={'action': 'activate', 'pk': self.pk})
 
 
-class NewsletterSubcription(models.Model):
+class NewsletterSubscription(models.Model):
     email = models.EmailField(max_length=255)
     active = models.BooleanField(default=True)
     join_date = models.DateTimeField('date created', default=timezone.now)
+    objects = NewsletterManager()
 
     def __str__(self):
         return self.email

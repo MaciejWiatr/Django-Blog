@@ -138,3 +138,5 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     }
 }
+
+from .email_config import *  # noqa

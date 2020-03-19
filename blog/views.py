@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from .forms import CommentForm, PostForm
-from .models import Post, Comment
+from .models import Post, Comment, NewsletterSubscription
+from django.core.mail import send_mail
 
 
 def index(request):
@@ -17,14 +18,11 @@ def index(request):
     query = request.GET.get("q")
     latest = Post.objects.latest()
     if query:
-        posts = posts.filter(
-            Q(title__icontains=query) |
-            Q(tags__name__icontains=query) |
-            Q(text__icontains=query)
-        ).distinct()
+        posts = posts.search(query)
     context = {
         'posts': posts,
-        'latest': latest
+        'latest': latest,
+        'query': query
     }
     return render(request, template, context)
 
