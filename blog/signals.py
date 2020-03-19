@@ -2,10 +2,11 @@ import os
 import shutil
 from pathlib import Path
 from django.template.defaultfilters import slugify
-from .models import Post
+from .models import Post, NewsletterSubscription
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django_blog.settings import MEDIA_ROOT, BASE_DIR
+from django.utils.crypto import get_random_string
 
 
 @receiver(post_delete, sender=Post)
@@ -23,3 +24,10 @@ def clear_files(sender, instance, **kwargs):
 def create_slug(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.title)
+
+
+@receiver(post_save, sender=NewsletterSubscription)
+def create_code(sender, instance, **kwargs):
+    if not instance.code:
+        instance.code = f'{instance.pk}{get_random_string(length=10)}'
+        instance.save()

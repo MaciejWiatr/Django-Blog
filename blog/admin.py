@@ -32,7 +32,7 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ('email', 'active', 'join_date')
+    list_display = ('email', 'active', 'join_date', 'code')
     list_filter = ('join_date', 'active')
     search_fields = ('email',)
     actions = ['disconnect_newsletter', 'join_newsletter']

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.template.defaultfilters import slugify
 
-from .models import Comment, Post
+from .models import Comment, Post, NewsletterSubscription
 
 
 class CommentForm(ModelForm):
@@ -32,3 +32,15 @@ class PostForm(ModelForm):
             raise ValidationError("Taki tytuł już istnieje")
         else:
             return title
+
+
+class NewsletterForm(ModelForm):
+    class Meta:
+        model = NewsletterSubscription
+        fields = ['email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        # if email in NewsletterSubscription.objects.email_list():
+        #     raise ValidationError("Ten email już został zarejestrowany")
+        return email

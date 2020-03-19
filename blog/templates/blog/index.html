@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 <head>
 
@@ -87,12 +88,19 @@
 
             {% endfor %}
         </div>
-
-
     </div>
-    <footer class="footer">
-        <p>Created by Maciej Wiatr</p>
-    </footer>
+    <section class="newsletter-section">
+        <h3>Podobają ci się moje artykuły?</h3>
+        <h5>Dołącz do newslettera!</h5>
+        <form method="POST">{% csrf_token %}
+            {{ form|crispy }}
+            <button class="button-simple">
+                Dołącz!
+            </button>
+        </form>
+
+    </section>
+
 
     <script>
         AOS.init();

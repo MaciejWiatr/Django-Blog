@@ -60,7 +60,11 @@ class NewsletterSubscription(models.Model):
     email = models.EmailField(max_length=255)
     active = models.BooleanField(default=True)
     join_date = models.DateTimeField('date created', default=timezone.now)
+    code = models.CharField(blank=True, max_length=10)
     objects = NewsletterManager()
+
+    def get_unsub_mail(self):
+        return reverse('blog:newsletter_unsub', kwargs={'code': self.code})
 
     def __str__(self):
         return self.email
