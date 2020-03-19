@@ -4,3 +4,4 @@
 /.vscode/
 .venv/
 /static/
+/django_blog/email_config.py

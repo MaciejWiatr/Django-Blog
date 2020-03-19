@@ -1,35 +1,45 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, FormView, UpdateView
-from .forms import CommentForm, PostForm
-from .models import Post, Comment
+from .forms import CommentForm, PostForm, NewsletterForm
+from .models import Post, Comment, NewsletterSubscription
+from django.core.mail import send_mail
+from .utils import send_newsletter_confirmation, send_post_notification
 
 
 def index(request):
     """
     Main view
     """
-
-    template = 'blog/index.html'
-    posts = Post.objects.all()
-    query = request.GET.get("q")
-    try:
-        latest = posts.order_by('-pub_date')[0]
-    except:
-        latest = ""
-    if query:
-        posts = posts.filter(
-            Q(title__icontains=query) |
-            Q(tags__name__icontains=query) |
-            Q(text__icontains=query)
-        ).distinct()
-    context = {
-        'posts': posts,
-        'latest': latest
-    }
-    return render(request, template, context)
+    if request.method == 'POST':
+        newsletter_form = NewsletterForm(request.POST)
+        if newsletter_form.is_valid():
+            newsletter = newsletter_form.save()
+            newsletter.save()
+            messages.success(request, 'Twój email został zarejestrowany do newslettera! :)')
+            send_newsletter_confirmation(Subscription=newsletter, site_url=request.build_absolute_uri())
+            return redirect('blog:index')
+        else:
+            messages.error(request, 'Ten email już został zarejestrowany')
+            return redirect('blog:index')
+    else:
+        newsletter_form = NewsletterForm
+        template = 'blog/index.html'
+        posts = Post.objects.all()
+        query = request.GET.get("q")
+        latest = Post.objects.latest()
+        if query:
+            posts = posts.search(query)
+        context = {
+            'posts': posts,
+            'latest': latest,
+            'query': query,
+            'form': newsletter_form,
+        }
+        return render(request, template, context)
 
 
 # Post related views
@@ -46,8 +56,8 @@ def post_detail(request, slug):
             return redirect("blog:post_detail", slug=slug)
     else:
         form = CommentForm
-        accepted_comments = post.comments.filter(active=True).order_by('-created_on')
-        not_accepted_comments = post.comments.filter(active=False).order_by('-created_on')
+        accepted_comments = post.comments.accepted()
+        not_accepted_comments = post.comments.not_accepted()
         tags = post.tags.all()
         return render(request, "blog/detail.html",
                       {'post': post, 'comments': accepted_comments, 'not_accepted': not_accepted_comments, 'tags': tags,
@@ -64,6 +74,7 @@ class PostCreate(FormView):
     def form_valid(self, form):
         post = form.save()
         post.save()
+        send_post_notification(post, self.request.build_absolute_uri(), NewsletterSubscription.objects.email_list())
         return super().form_valid(form)
 
 
@@ -95,3 +106,11 @@ def activate_comment(request, action, pk):
         comment.delete()
         messages.warning(request, 'Komentarz został usunięty')
         return redirect("blog:post_detail", slug=comment_post.slug)
+
+
+# Newsletter views
+def newsletter_unsub(request, code):
+    newsletter = get_object_or_404(NewsletterSubscription, code=code)
+    email = newsletter.email
+    newsletter.delete()
+    return HttpResponse(f'Pomyślnie opuściłeś mój newsletter :( kolego {email}')

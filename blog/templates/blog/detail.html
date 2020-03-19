@@ -55,12 +55,11 @@
                     <div class="comment">
                         <div class="comment-date">opublikowano {{ comment.created_on.date }}
                             {% if request.user.is_staff %}
-                                <form style="overflow: hidden;margin:0;"
-                                      action="/comment/delete/{{ comment.id }}">
+                                <a href="{{ comment.get_delete_url }}">
                                     <button class="button-delete" type="submit">
                                         <div>x</div>
                                     </button>
-                                </form>
+                                </a>
                             {% endif %}
                         </div>
                         <p class="comment-text">
@@ -68,8 +67,9 @@
                         </p>
                     </div>
                     <hr>
-                    </div>
                 {% endfor %}
+            </div>
+
         {% endif %}
         {% if request.user.is_staff %}
             <div class="comments-wrapper mb-5">
@@ -84,12 +84,12 @@
                         <p>{{ comment.text }}</p>
                         <div class="comment-admin">
                             id: {{ comment.id }}
-                            <form action="/comment/activate/{{ comment.id }}">
-                                <button class="button-simple ml-3" type="submit">activate</button>
-                            </form>
-                            <form action="/comment/delete/{{ comment.id }}">
-                                <button class="button-simple ml-3" type="submit">delete</button>
-                            </form>
+                            <a href="{{ comment.get_activate_url }}">
+                                <button class="button-simple ml-3" type="submit">Activate</button>
+                            </a>
+                            <a href="{{ comment.get_delete_url }}">
+                                <button class="button-simple ml-3" type="submit">Delete</button>
+                            </a>
                         </div>
 
                     </div>
@@ -98,7 +98,6 @@
             </div>
 
         {% endif %}
-        </div>
 
 
     </section>
@@ -120,9 +119,7 @@
             {% endfor %}
         {% endif %}
     </script>
-    <footer class="footer">
-        <p>Created by Maciej Wiatr</p>
-    </footer>
+
 {% endblock %}
 
 </body>
