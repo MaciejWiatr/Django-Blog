@@ -22,7 +22,7 @@
     }
 </style>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/#title">
         <span style="color: #00cc66; font-weight: bold">blog</span>.maciejwiatr.me
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -35,10 +35,10 @@
                 <a class="nav-link" href="#">O mnie</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Wpisy</a>
+                <a class="nav-link" href="/#articles">Wpisy</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Newsletter</a>
+                <a class="nav-link" href="/#newsletter">Newsletter</a>
             </li>
             {% if request.user.is_staff %}
                 <li>
@@ -68,7 +68,6 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/f27026538d.js" crossorigin="anonymous"></script>
-
 <footer class="footer">
     <p>Created by Maciej Wiatr</p>
 </footer>

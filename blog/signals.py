@@ -11,13 +11,22 @@ from django.utils.crypto import get_random_string
 
 @receiver(post_delete, sender=Post)
 def clear_files(sender, instance, **kwargs):
-    media_path = MEDIA_ROOT + f'/{instance.__class__.__name__}/{instance.slug}/'
+    media_path = MEDIA_ROOT + f'/{instance.__class__.__name__}/{instance.title}/'
+    print(f'Trying to delete {media_path}')
     if os.path.exists(media_path):
         root = Path(BASE_DIR)
         directory = Path(media_path)
         if root in directory.parents:  # Extra safety option to guarantee safety to files outside django dir
             print(f'Deleting media folder: {media_path}')
-            shutil.rmtree(media_path)
+            try:
+                shutil.rmtree(media_path)
+                print('Successfully deleted media folder')
+            except Exception as e:
+                print(f'An error occured during folder deletion {e}')
+        else:
+            print('Folder is in incorrect path')
+    else:
+        print('Folder dont exist')
 
 
 @receiver(post_save, sender=Post)

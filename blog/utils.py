@@ -9,7 +9,7 @@ from django_blog.email_config import EMAIL_HOST_USER
 def file_path_gen(instance, filename):
     file = filename
     class_name = instance.__class__.__name__
-    slug = instance.slug if instance.slug else instance.title if instance.title else instance.id
+    slug = instance.title
     file_type = "media" if file.endswith(('.png', '.jpg', '.jpeg')) else "files"
 
     return f'{class_name}/{slug}/{file_type}/{file}'
@@ -18,14 +18,16 @@ def file_path_gen(instance, filename):
 
 
 def compress_image(uploadedImage):
-    imageTemproary = Image.open(uploadedImage)
+    image_temporary = Image.open(uploadedImage)
     outputIoStream = BytesIO()
-    imageTemproaryResized = imageTemproary.resize((1020, 573))
-    try:
-        imageTemproary = pure_pil_alpha_to_color_v2(imageTemproary)
-    except:
-        pass
-    imageTemproary.save(outputIoStream, format='JPEG', quality=80)
+    image_temproary_resized = image_temporary.resize((1020, 573))
+    if image_temporary.mode != 'RGB':
+        try:
+            image_temporary = pure_pil_alpha_to_color_v2(image_temporary)
+        except IndexError:
+            pass
+        image_temporary = image_temporary.convert('RGB')
+    image_temporary.save(outputIoStream, format='JPEG', quality=80)
     outputIoStream.seek(0)
     uploadedImage = InMemoryUploadedFile(outputIoStream, 'ImageField', "%s.jpg" % uploadedImage.name.split('.')[0],
                                          'image/jpeg', sys.getsizeof(outputIoStream), None)
