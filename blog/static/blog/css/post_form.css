@@ -1,8 +1,4 @@
 /*POST_FORM_CSS*/
-body {
-    width: 100vw;
-    height: 100vh;
-}
 
 .form {
     margin-top: 10px;
@@ -32,6 +28,10 @@ body {
 
 .textinput, .tagwidget {
     border-radius: 0px;
+}
+
+.footer {
+    display: none;
 }
 
 @media (max-width: 768px) {

@@ -19,15 +19,18 @@
 
 
 
-    <section class="title-section" style="background-image: url('{% static "blog/img/background.jpg" %}')">
+    <section id="title" class="title-section" style="background-image: url('{% static "blog/img/background.jpg" %}')">
 
         <h1>Blog o programowaniu</h1>
         <h2>Maciej Wiatr</h2>
 
         <div class="title-cfa">
-            <button>
-                Wpisy
-            </button>
+            <a href="#articles">
+                <button>
+                    Wpisy
+                </button>
+            </a>
+
             <button>
                 YouTube
             </button>
@@ -44,7 +47,7 @@
         </a>
     </nav>
 
-    <section class="article-section">
+    <section id="articles" class="article-section">
         <div class="search-wrapper">
             <form method="GET" , action="">
                 <input class="search-box" type="text" {% if query %}value="{{ query }}"{% endif %} name="q"
@@ -89,15 +92,18 @@
             {% endfor %}
         </div>
     </div>
-    <section class="newsletter-section">
-        <h3>Podobają ci się moje artykuły?</h3>
-        <h5>Dołącz do newslettera!</h5>
-        <form method="POST">{% csrf_token %}
-            {{ form|crispy }}
-            <button class="button-simple">
-                Dołącz!
-            </button>
-        </form>
+    <section id="newsletter" class="newsletter-section">
+        <div class="nwsltr-wrapper">
+            <h3>Podobają ci się moje artykuły?</h3>
+            <h5>Dołącz do newslettera!</h5>
+            <form method="POST">{% csrf_token %}
+                {{ form|crispy }}
+                <button class="button-simple">
+                    Dołącz!
+                </button>
+            </form>
+        </div>
+
 
     </section>
 
