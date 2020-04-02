@@ -115,10 +115,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1133" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583063816876" />
-    <state x="583" y="26" key="CommitChangelistDialog2" timestamp="1583060625939">
+    <state x="583" y="0" key="CommitChangelistDialog2" timestamp="1585849019175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="583" y="26" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583060625939" />
+    <state x="583" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1585849019175" />
     <state x="739" y="275" key="FileChooserDialogImpl" timestamp="1583018822580">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -143,6 +143,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="196" height="539" key="HiddenNamespacesPopup/0.0.1920.1040@0.0.1920.1040" timestamp="1583060855702" />
+    <state x="184" y="92" key="MergeDialog" timestamp="1585849004351">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="92" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585849004351" />
+    <state x="664" y="235" key="MultipleFileMergeDialog" timestamp="1585849004357">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="664" y="235" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585849004357" />
     <state x="461" y="163" key="SettingsEditor" timestamp="1583068888931">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
