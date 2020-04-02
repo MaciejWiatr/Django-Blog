@@ -1,13 +1,16 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView
 from .forms import CommentForm, PostForm, NewsletterForm
 from .models import Post, Comment, NewsletterSubscription
-from django.core.mail import send_mail
 from .utils import send_newsletter_confirmation, send_post_notification
+
+
+# import logging
+#
+# logger = logging.getLogger(__name__)
 
 
 def index(request):

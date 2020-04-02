@@ -48,7 +48,7 @@
     </nav>
 
     <section id="articles" class="article-section">
-        <div class="search-wrapper">
+        <div id='search' class="search-wrapper">
             <form method="GET" , action="">
                 <input class="search-box" type="text" {% if query %}value="{{ query }}"{% endif %} name="q"
                        placeholder="Szukaj">
@@ -93,7 +93,7 @@
         </div>
     </div>
     <section id="newsletter" class="newsletter-section">
-        <div class="nwsltr-wrapper">
+        <div data-aos="fade-up" class="nwsltr-wrapper">
             <h3>Podobają ci się moje artykuły?</h3>
             <h5>Dołącz do newslettera!</h5>
             <form method="POST">{% csrf_token %}
@@ -122,7 +122,9 @@
                 });
             {% endfor %}
         {% endif %}
-
+        if (window.location.search.indexOf('q') > -1) {
+            document.getElementById('search').scrollIntoView();
+        }
     </script>
 
 
