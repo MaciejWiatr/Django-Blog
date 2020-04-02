@@ -1,0 +1,136 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>{% block title %}Blog Macieja Wiatra{% endblock %}</title>
+    {% block additional_styling %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    {% endblock %}
+
+</head>
+<body>
+{% block content %}
+
+
+
+
+    <section id="title" class="title-section" style="background-image: url('{% static "blog/img/background.jpg" %}')">
+
+        <h1>Blog o programowaniu</h1>
+        <h2>Maciej Wiatr</h2>
+
+        <div class="title-cfa">
+            <a href="#articles">
+                <button>
+                    Wpisy
+                </button>
+            </a>
+
+            <button>
+                YouTube
+            </button>
+
+        </div>
+
+    </section>
+    <nav class="nav info-nav">
+        <a class="nav-link" href="{{ latest.get_absolute_url }}">
+            Najnowszy artykuł: {{ latest.title }}
+        </a>
+        <a class="nav-link" href="#">
+            Najnowszy film: Wkrótce!
+        </a>
+    </nav>
+
+    <section id="articles" class="article-section">
+        <div id='search' class="search-wrapper">
+            <form method="GET" , action="">
+                <input class="search-box" type="text" {% if query %}value="{{ query }}"{% endif %} name="q"
+                       placeholder="Szukaj">
+                <button class="search-button" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+    </section>
+    <div class="container-fluid">
+        <div class="row justify-content-around articles-wrapper mb-5">
+            {% for post in posts %}
+                <div data-aos="fade-up" class="col-md-6 col-lg-4 mt-3">
+                    <div class="card" style="width: 100%">
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
+                        <div class="card-body">
+                            {{ post.pub_date }}
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            {% for tag in post.tags.all %}
+                                <p class="post-tag">{{ tag.name }}</p>
+                            {% endfor %}
+                            <p class="card-text">{{ post.text|striptags|safe|truncatewords:10 }}</p>
+                            <a href="{{ post.get_absolute_url }}">
+                                <button class="button-simple">Czytaj</button>
+                            </a>
+                            {% if request.user.is_staff %}
+                                <hr>
+                                <h4>Admin:</h4>
+                                <div class="post-admin-manage">
+                                    <a href="{{ post.get_delete_url }}">
+                                        <button class="button-simple" type="submit">Delete post</button>
+                                    </a>
+                                    <a href="{{ post.get_update_url }}">
+                                        <button class="button-simple ml-3" type="submit">Update post</button>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+    <section id="newsletter" class="newsletter-section">
+        <div data-aos="fade-up" class="nwsltr-wrapper">
+            <h3>Podobają ci się moje artykuły?</h3>
+            <h5>Dołącz do newslettera!</h5>
+            <form method="POST">{% csrf_token %}
+                {{ form|crispy }}
+                <button class="button-simple">
+                    Dołącz!
+                </button>
+            </form>
+        </div>
+
+
+    </section>
+
+
+    <script>
+        AOS.init();
+        {% if messages %}
+            {% for mess in messages %}
+                Swal.fire({
+                    title: '{{mess.tags|capfirst}}',
+                    text: '{{ mess|safe }}',
+                    icon: '{{mess.tags}}',
+                    confirmButtonText: 'ok',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            {% endfor %}
+        {% endif %}
+        if (window.location.search.indexOf('q') > -1) {
+            document.getElementById('search').scrollIntoView();
+        }
+    </script>
+
+
+
+
+{% endblock %}
+
+
+</body>

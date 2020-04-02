@@ -1,0 +1,78 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static "blog/img/favicon.ico" %}"/>
+    <title>{% block title %}
+        Witam
+    {% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="stylesheet" href="{% static "blog/css/style.css" %}" type="text/css">
+    {% block additional_styling %}{% endblock %}
+</head>
+<body>
+<style>
+    .asteriskField {
+        display: none;
+    }
+</style>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <span style="color: #00cc66; font-weight: bold">blog</span>.maciejwiatr.me
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/#search">Szukaj</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">O mnie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#articles">Wpisy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/#newsletter">Newsletter</a>
+            </li>
+            {% if request.user.is_staff %}
+                <li>
+                    <form style="height: 100%; overflow: hidden; margin:0;" action="/post/create">
+                        <button class="btn btn-success">
+                            Add new post
+                        </button>
+                    </form>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/f27026538d.js" crossorigin="anonymous"></script>
+<footer class="footer">
+    <p>Created by Maciej Wiatr</p>
+</footer>
+</body>
+</html>

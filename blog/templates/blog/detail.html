@@ -1,0 +1,126 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ post.title }}{% endblock %}</title>
+    {% block additional_styling %}
+        <link rel="stylesheet" href="{% static "blog/css/detail.css" %}" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Literata&display=swap" rel="stylesheet">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark-reasonable.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+
+{% block content %}
+    <section>
+        <header style="background-image: url('{{ post.image.url }}')">
+            <h4>{{ post.pub_date }}</h4>
+            <h1>{{ post.title }}</h1>
+            {% if tags %}
+                <div class="tags">
+                    {% for tag in tags %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </header>
+    </section>
+    <section class="text-section">
+        <div class="text">
+            {{ post.media | safe }}
+            {{ post.text | safe }}
+        </div>
+    </section>
+    <section class="comment-section">
+
+        <form class="comment-form-wrapper" method="post">
+            <h3 class="comment-header">Dodaj komentarz</h3>
+            <div class="comment-form">
+                {% csrf_token %}
+                {{ form|crispy }}
+            </div>
+
+            <button class="button-simple" type="submit">Dodaj</button>
+        </form>
+        {% if comments %}
+            <div class="comments-wrapper">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div class="comment-date">opublikowano {{ comment.created_on.date }}
+                            {% if request.user.is_staff %}
+                                <a href="{{ comment.get_delete_url }}">
+                                    <button class="button-delete" type="submit">
+                                        <div>x</div>
+                                    </button>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <p class="comment-text">
+                            {{ comment.text }}
+                        </p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+        {% if request.user.is_staff %}
+            <div class="comments-wrapper mb-5">
+                <hr>
+                <h3>Not accepted</h3>
+                {% for comment in not_accepted %}
+                    <div class="comment">
+                        <div class="comment-date">
+                            {{ comment.created_on.date }}
+
+                        </div>
+                        <p>{{ comment.text }}</p>
+                        <div class="comment-admin">
+                            id: {{ comment.id }}
+                            <a href="{{ comment.get_activate_url }}">
+                                <button class="button-simple ml-3" type="submit">Activate</button>
+                            </a>
+                            <a href="{{ comment.get_delete_url }}">
+                                <button class="button-simple ml-3" type="submit">Delete</button>
+                            </a>
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        {% endif %}
+
+
+    </section>
+
+
+
+
+    <script>
+        hljs.initHighlightingOnLoad();
+        {% if messages %}
+            {% for mess in messages %}
+                Swal.fire({
+                    title: '{{mess.tags|capfirst}}',
+                    text: '{{ mess|safe }}',
+                    icon: '{{mess.tags}}',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            {% endfor %}
+        {% endif %}
+    </script>
+
+{% endblock %}
+
+</body>
+</html>

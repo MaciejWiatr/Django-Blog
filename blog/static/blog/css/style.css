@@ -1,0 +1,260 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Roboto, sans-serif;
+    min-height: 110vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #28a745;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #218838;
+}
+
+.navbar {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar-brand {
+}
+
+.title-section {
+    color: white;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+}
+
+.title-section > h1 {
+    font-weight: 600;
+    text-align: center;
+}
+
+.title-section button {
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid white;
+    color: white;
+    width: 100px;
+    height: 50px;
+    font-size: 1.2rem;
+}
+
+.title-section button:hover {
+    background: white;
+    color: black;
+    transition: all 0.2s ease-in-out;
+}
+
+.title-section .title-cfa {
+    margin-top: 20px;
+    width: 230px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.info-nav {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.info-nav .nav-link {
+    text-align: center;
+    width: 50%;
+    color: #28a745;
+}
+
+.info-nav .nav-link:nth-child(2) {
+    position: relative;
+}
+
+.info-nav .nav-link:nth-child(2)::before {
+    position: absolute;
+    content: "";
+    height: 70%;
+    width: 1px;
+    background-color: lightgrey;
+    left: -0.5px;
+    /*margin-top: auto;*/
+    /*margin-bottom: auto;*/
+    /*top: 50%;*/
+    align-self: center;
+    transform: translateY(-2px);
+}
+
+.search-wrapper {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-wrapper form {
+    margin: 0;
+}
+
+.search-wrapper .search-box {
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+    height: 40px;
+    width: 250px;
+}
+
+.search-wrapper .search-button {
+    height: 40px;
+    transform: translateY(1px);
+    width: 40px;
+    border: solid 1px black;
+    color: black;
+    background: rgba(0, 0, 0, 0);
+}
+
+.search-wrapper .search-button:hover {
+    color: whitesmoke;
+    background: black;
+    transition: all 0.2s ease-in-out;
+}
+
+.articles-wrapper {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.card-img-top {
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.card-text {
+    color: grey;
+}
+
+.post-tag {
+    display: inline-block;
+    border: 1px solid lightgrey;
+    color: lightgrey;
+    box-sizing: border-box;
+    padding: 3px;
+    font-size: 0.9rem;
+}
+
+.button-simple {
+    border: 1px solid black;
+    min-width: 100px;
+    padding: 8px;
+    box-sizing: border-box;
+    height: 40px;
+    background: rgba(0, 0, 0, 0);
+}
+
+.button-simple:hover {
+    background: black;
+    color: whitesmoke;
+    transition: all 0.2s ease-in-out;
+}
+
+.post-admin-manage {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.footer {
+    width: 100%;
+    background: black;
+    color: whitesmoke;
+    font-size: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.newsletter-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    height: 250px;
+}
+
+.nwsltr-wrapper {
+    border: 1px solid rgba(0, 0, 0, .125);
+    padding: 20px;
+}
+
+.nwsltr-wrapper form {
+    margin: 0;
+}
+
+.newsletter-section h3,
+h5 {
+    display: block;
+}
+
+.newsletter-section h3 {
+    font-weight: bold;
+}
+
+.newsletter-section h5 {
+    color: #39b856;
+}
+
+.newsletter-section #id_email {
+    border-radius: 0;
+}
+
+.footer p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .articles-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .newsletter-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .title-section {
+        background-position: center;
+    }
+}

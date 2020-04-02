@@ -1,0 +1,41 @@
+/*POST_FORM_CSS*/
+
+.form {
+    margin-top: 10px;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form-wrapper .form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.django-ckeditor-widget {
+    width: 100%;
+    max-width: none;
+}
+
+#id_title {
+    font-size: 30px !important;
+}
+
+.textinput, .tagwidget {
+    border-radius: 0px;
+}
+
+.footer {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .form-wrapper .form {
+        width: 90%;
+    }
+}

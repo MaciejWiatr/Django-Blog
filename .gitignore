@@ -1,3 +1,7 @@
-.venv/ 
-/static/
+/db.sqlite3
 /media/
+/.venv/
+/.vscode/
+.venv/
+/static/
+/django_blog/email_config.py

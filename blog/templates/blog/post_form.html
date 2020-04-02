@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Create new post{% endblock %}</title>
+    {% block additional_styling %}
+        <link rel="stylesheet" href="{% static "blog/css/post_form.css" %}" type="text/css">{% endblock %}
+</head>
+<body>
+{% block content %}
+    <div style="width: 100vw; height: 100vh">
+
+        <div class="form-wrapper" style="">
+            <form class="form " enctype="multipart/form-data" method="post">{% csrf_token %}
+
+                {{ form.media }}
+                {{ form|crispy }}
+                <button class="btn btn-success" type="submit" value="Save">Zapisz</button>
+
+
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+</body>
+</html>
