@@ -18,7 +18,9 @@ pip install -r requirement.txt
 ## Usage
 
 ```sh
-py manage.py migrate && py manage.py runserver
+py manage.py migrate
+py manage.py collectstatic
+py manage.py runserver
 ```
 
 ## Run tests
