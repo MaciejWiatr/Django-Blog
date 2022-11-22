@@ -14,7 +14,7 @@ django-image-optimizer==1.0.0
 django-js-asset==1.2.2
 django-taggit==1.2.0
 idna==2.9
-Pillow==7.0.0
+Pillow==9.3.0
 pipfile==0.0.2
 pytz==2019.3
 requests==2.23.0
